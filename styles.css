@@ -46,6 +46,7 @@ header p {
     display: flex;
     gap: 10px;
     margin-bottom: 30px;
+    flex-wrap: wrap;
 }
 
 #location-input {
@@ -62,7 +63,7 @@ header p {
     border-color: #74b9ff;
 }
 
-#search-btn {
+#search-btn, #location-btn {
     padding: 15px 25px;
     background: #74b9ff;
     color: white;
@@ -73,8 +74,16 @@ header p {
     transition: background 0.3s;
 }
 
-#search-btn:hover {
+#search-btn:hover, #location-btn:hover {
     background: #0984e3;
+}
+
+#location-btn {
+    background: #00b894;
+}
+
+#location-btn:hover {
+    background: #00a085;
 }
 
 .current-weather h2 {
@@ -121,4 +130,57 @@ header p {
 
 .detail-value {
     color: #666;
+}
+
+.recommendations {
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 2px solid #f1f2f6;
+}
+
+.recommendations h3 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+}
+
+.rec-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.rec-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.rec-card:hover {
+    transform: translateY(-5px);
+}
+
+.rec-card h4 {
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+.rec-card p {
+    opacity: 0.9;
+    line-height: 1.5;
+}
+
+.rec-card.clothing {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.rec-card.activity {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.rec-card.health {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
 }
