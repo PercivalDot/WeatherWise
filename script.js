@@ -2,15 +2,22 @@ document.addEventListener('DOMContentLoaded', function() {
     const locationInput = document.getElementById('location-input');
     const searchBtn = document.getElementById('search-btn');
     const locationBtn = document.getElementById('location-btn');
+    const favoriteBtn = document.getElementById('favorite-btn');
     const weatherInfo = document.getElementById('weather-info');
+
+    let currentLocation = '';
 
     searchBtn.addEventListener('click', searchWeather);
     locationBtn.addEventListener('click', getCurrentLocationWeather);
+    favoriteBtn.addEventListener('click', toggleFavorite);
     locationInput.addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
             searchWeather();
         }
     });
+
+    // Load favorites on startup
+    loadFavorites();
 
     async function searchWeather() {
         const location = locationInput.value.trim();
@@ -61,13 +68,18 @@ document.addEventListener('DOMContentLoaded', function() {
         const conditionEl = document.querySelector('.condition');
 
         temperatureEl.textContent = `${data.temperature}°C`;
-        conditionEl.textContent = data.condition;
+        conditionEl.textContent = `${getWeatherIcon(data.condition)} ${data.condition}`;
 
         // Add more weather details
         addWeatherDetails(data);
 
         // Generate and show recommendations
         generateRecommendations(data);
+
+        // Update current location and show favorite button
+        currentLocation = data.location;
+        favoriteBtn.style.display = 'block';
+        updateFavoriteButton();
     }
 
     function addWeatherDetails(data) {
@@ -227,6 +239,100 @@ document.addEventListener('DOMContentLoaded', function() {
 
         return recommendations;
     }
+
+    function getWeatherIcon(condition) {
+        const icons = {
+            'sunny': '☀️',
+            'cloudy': '☁️',
+            'partly cloudy': '⛅',
+            'rainy': '🌧️',
+            'thunderstorms': '⛈️',
+            'snow': '❄️',
+            'fog': '🌫️',
+            'windy': '💨'
+        };
+
+        const normalizedCondition = condition.toLowerCase();
+        for (const key in icons) {
+            if (normalizedCondition.includes(key.replace(' ', ''))) {
+                return icons[key];
+            }
+        }
+        return '🌤️'; // default icon
+    }
+
+    function toggleFavorite() {
+        const favorites = getFavorites();
+        const index = favorites.indexOf(currentLocation);
+
+        if (index > -1) {
+            favorites.splice(index, 1);
+        } else {
+            favorites.push(currentLocation);
+        }
+
+        saveFavorites(favorites);
+        loadFavorites();
+        updateFavoriteButton();
+    }
+
+    function getFavorites() {
+        const stored = localStorage.getItem('weatherwise-favorites');
+        return stored ? JSON.parse(stored) : [];
+    }
+
+    function saveFavorites(favorites) {
+        localStorage.setItem('weatherwise-favorites', JSON.stringify(favorites));
+    }
+
+    function loadFavorites() {
+        const favorites = getFavorites();
+        const favoritesSection = document.getElementById('favorites-section');
+        const favoritesList = document.getElementById('favorites-list');
+
+        if (favorites.length === 0) {
+            favoritesSection.style.display = 'none';
+            return;
+        }
+
+        favoritesSection.style.display = 'block';
+        favoritesList.innerHTML = '';
+
+        favorites.forEach(location => {
+            const item = document.createElement('div');
+            item.className = 'favorite-item';
+            item.innerHTML = `
+                <span onclick="searchFavoriteLocation('${location}')">${location}</span>
+                <button class="remove-btn" onclick="removeFavorite('${location}')">×</button>
+            `;
+            favoritesList.appendChild(item);
+        });
+    }
+
+    function updateFavoriteButton() {
+        const favorites = getFavorites();
+        const isFavorite = favorites.includes(currentLocation);
+        favoriteBtn.textContent = isFavorite ? '💔' : '❤️';
+        favoriteBtn.title = isFavorite ? 'Remove from favorites' : 'Add to favorites';
+    }
+
+    window.searchFavoriteLocation = function(location) {
+        locationInput.value = location;
+        searchWeather();
+    };
+
+    window.removeFavorite = function(location) {
+        const favorites = getFavorites();
+        const index = favorites.indexOf(location);
+        if (index > -1) {
+            favorites.splice(index, 1);
+            saveFavorites(favorites);
+            loadFavorites();
+            if (currentLocation === location) {
+                updateFavoriteButton();
+            }
+        }
+    };
 
     function showError(message) {
         const conditionEl = document.querySelector('.condition');

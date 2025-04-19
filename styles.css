@@ -86,6 +86,59 @@ header p {
     background: #00a085;
 }
 
+#favorite-btn {
+    background: #e17055;
+    font-size: 18px;
+}
+
+#favorite-btn:hover {
+    background: #d63031;
+}
+
+.favorites-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+}
+
+.favorites-section h3 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.favorites-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.favorite-item {
+    background: #74b9ff;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.favorite-item:hover {
+    background: #0984e3;
+}
+
+.favorite-item .remove-btn {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 12px;
+    margin-left: 5px;
+}
+
 .current-weather h2 {
     margin-bottom: 20px;
     color: #333;
@@ -183,4 +236,88 @@ header p {
 
 .rec-card.health {
     background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    header h1 {
+        font-size: 2.5em;
+    }
+
+    .weather-card {
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .location {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    #location-input {
+        min-width: 100%;
+    }
+
+    #search-btn, #location-btn {
+        padding: 12px 20px;
+        width: 100%;
+    }
+
+    .weather-details {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .temperature {
+        font-size: 2.5em;
+    }
+
+    .rec-cards {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .rec-card {
+        padding: 15px;
+    }
+
+    .detail-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+
+    header h1 {
+        font-size: 2em;
+    }
+
+    header p {
+        font-size: 1em;
+    }
+
+    .weather-card {
+        padding: 15px;
+        border-radius: 15px;
+    }
+
+    .temperature {
+        font-size: 2em;
+    }
+
+    .recommendations h3 {
+        font-size: 1.3em;
+    }
 }
