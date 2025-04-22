@@ -114,6 +114,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         temperatureEl.textContent = '--°C';
         conditionEl.textContent = 'Loading...';
+        conditionEl.style.color = '#666'; // Reset color
+
+        // Hide recommendations while loading
+        const recommendations = document.getElementById('recommendations');
+        recommendations.style.display = 'none';
     }
 
     async function getCurrentLocationWeather() {
@@ -338,5 +343,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const conditionEl = document.querySelector('.condition');
         conditionEl.textContent = message;
         conditionEl.style.color = '#e74c3c';
+
+        // Hide recommendations section on error
+        const recommendations = document.getElementById('recommendations');
+        recommendations.style.display = 'none';
+
+        // Hide favorite button on error
+        favoriteBtn.style.display = 'none';
     }
 });
