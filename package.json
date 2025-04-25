@@ -1,0 +1,23 @@
+{
+  "name": "weatherwise",
+  "version": "1.0.0",
+  "description": "A smart weather application with personalized recommendations",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "serve": "python3 -m http.server 8000"
+  },
+  "keywords": [
+    "weather",
+    "app",
+    "javascript",
+    "responsive",
+    "geolocation"
+  ],
+  "author": "PercivalDot",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PercivalDot/WeatherWise.git"
+  }
+}
